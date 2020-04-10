@@ -5,6 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DeleteModalComponent } from '../modals/delete-modal/delete-modal.component';
+import { Router } from '@angular/router';
 
 export interface Employee {
   firstName: string;
@@ -28,8 +29,8 @@ export class EmployeeListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(private employeeService: EmployeeService,
-              public dialog: MatDialog // ,
-    // public dialogRef: MatDialogRef<EmployeeListComponent>
+              public dialog: MatDialog,
+              private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -77,6 +78,11 @@ export class EmployeeListComponent implements OnInit, AfterViewInit {
     console.log(`Deleting...${id}`); // Loader will be used at this place to show in progress
   }
 
+  editEmployee(id: string) {
+    this.router.navigate(['addemployee', {id}]); // To navigate to add employee page with selected employee details
+    console.log(`Editing...${id}`);
+  }
+
   openDialog(Operation: string, id: string): void {
     const dialogRef = this.dialog.open(DeleteModalComponent, {
       width: '400px',  // Width of dialog box
@@ -84,27 +90,21 @@ export class EmployeeListComponent implements OnInit, AfterViewInit {
       disableClose: true  // To restrict escape key and click outside of modal popup
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (Operation === 'Delete' && result === true) {
+    dialogRef.afterClosed().subscribe(result => {   // Yes or Cancel button click of modal popup
+      if (Operation === 'Delete' && result === true) {        // Delete case
         this.employeeService.deleteEmployees(id)
           .subscribe(
             res => {
-              console.log(res); // snack bar will be used at this place
+              console.log(res);
               this.getAllEmployees(); // To reload the grid
             },
             err => console.log(err)
           );
-        console.log(`Delete result: ${result}`);
-      } else if (Operation === 'Edit' && result === true) {
-        console.log(`Edit result: ${result}`);
-      } else {
+        console.log(`Delete result: ${result}`);              // snack bar will be used at this place
+      } else {                                                // Cancel button click
         console.log(`Cancelled Operation`);
       }
     });
-  }
-
-  editEmployee(id: string) {
-    console.log(`Editing...${id}`);
   }
 
 }

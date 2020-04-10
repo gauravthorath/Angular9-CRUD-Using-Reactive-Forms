@@ -1,43 +1,45 @@
-<mat-card class="example-card">
-    <mat-card-header>
-      <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title>Add New Employee</mat-card-title>
-      <mat-card-subtitle>Enter all details marked with * mark</mat-card-subtitle>
-    </mat-card-header>
-    <img style="height:100px; width: 100px" mat-card-image src="https://i2.wp.com/bizcoachinfo.com/wp-content/uploads/2017/08/10-Best-Practices-for-an-Online-Employee-Handbook.png?resize=960%2C640&ssl=1" alt="Photo of a Shiba Inu" />
-    <mat-card-content>
-        <form class="example-form" #formData="ngForm">
-          <!-- {{formData.value | json}} -->
-            <!-- <mat-form-field class="example-full-width">
-              <mat-label>Name</mat-label>
-              <input matInput placeholder="First Name" id="firstName" name="firstName">
-            </mat-form-field> -->
-<!--           
-            <mat-form-field class="example-full-width">
-                <mat-label>Department</mat-label>
-                <input matInput placeholder="Last Name" id="lastName" name="lastName">
-              </mat-form-field> -->
+<mat-card class="card">
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image"></div>
+    <mat-card-title>Add New Employee</mat-card-title>
+    <mat-card-subtitle>Enter all details marked with * mark</mat-card-subtitle>
+  </mat-card-header>
 
-            <!-- <mat-form-field class="example-full-width">
-              <mat-label>Address</mat-label>
-              <textarea matInput placeholder="Complete Address" name="completeAddress"></textarea>
-            </mat-form-field> -->
-
-            <!-- <mat-form-field class="example-full-width">
-                <mat-label>DOJ</mat-label>
-                
-                <input matInput placeholder="DOJ" id="doj" name="doj">
-            </mat-form-field> -->
-            <br />
-            <div>First Name: </div><div><input id='firstName' name='firstName' type="text" [(ngModel)]='employeeData.firstName' required /><br /></div>
-            <div>Last Name:</div><div><input id='lastName' name='lastName' type="text" [(ngModel)]='employeeData.lastName' required /><br /></div>
-            <div>Address:</div><div><input id='Address' name='Address' type="text" [(ngModel)]='employeeData.Address' /><br /></div>
-            <div>DOJ:</div><div><input id='doj' name='doj' type="text" [(ngModel)]='employeeData.doj' /><br /></div> 
-             
-           </form>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button (click) = "saveEmployee()" class='primary'>Save</button>
-      <button mat-raised-button (click) = "cancel()" class='warn'>Cancel</button> 
-    </mat-card-actions>
-  </mat-card>
+  <mat-card-content>
+    <form class="form" #formData="ngForm">
+      <div class="container">
+        <mat-form-field class="example-full-width">
+          <mat-label>First Name</mat-label>
+          <input matInput placeholder="Gaurav" value="" id='firstName' name='firstName' type="text"
+            [(ngModel)]='employeeData.firstName'>
+        </mat-form-field>
+        <br><br>
+        <mat-form-field class="example-full-width">
+          <mat-label>Last Name</mat-label>
+          <input matInput placeholder="Thorat" value="" id='lastName' name='lastName' type="text"
+            [(ngModel)]='employeeData.lastName'>
+        </mat-form-field>
+        <br><br>
+        <mat-form-field hintLabel="Max 100 characters" appearance="fill">
+          <mat-label>Enter your complete address</mat-label>
+          <textarea matInput MatFormFieldControl maxlength="100"
+            placeholder="2010, Tower 23, Blue Ridge Scociety, Hinewadi, Pune - 411057" id='Address' name='Address'
+            [(ngModel)]='employeeData.Address' #address></textarea>
+          <mat-hint align="end">{{address.value?.length || 0}}/100</mat-hint>
+        </mat-form-field>
+        <br><br>
+        <mat-form-field color="accent">
+          <mat-label>Date of Joining</mat-label>
+          <input matInput [matDatepicker]="picker" id='doj' name='doj' [(ngModel)]='employeeData.doj'>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker color="primary"></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </form>
+  </mat-card-content>
+  <mat-card-actions align="right">
+    <button id="btnSubmit" mat-raised-button (click)="submitEmployee(btnSubmitText)"
+      class='primary'>{{btnSubmitText}}</button>
+    <button mat-raised-button (click)="cancelorClear(btnTextCancelOrClear)" class='warn'>{{btnTextCancelOrClear}}</button>
+  </mat-card-actions>
+</mat-card>
