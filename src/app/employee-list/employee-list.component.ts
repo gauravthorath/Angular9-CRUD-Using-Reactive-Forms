@@ -34,22 +34,6 @@ export class EmployeeListComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
-
-    // this.employeeList = [
-    //   {
-    //     firstName: 'Gaurav',
-    //     lastName: 'Thorat',
-    //     Address: 'Nashik',
-    //     doj: '22'
-    //   },
-    //   {
-    //     firstName: 'Sneha',
-    //     lastName: 'Thorat',
-    //     Address: 'Nashik',
-    //     doj: '25'
-    //   }
-    // ];
-
     this.getAllEmployees();
   }
 

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from '../services/employee.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { FormGroup, FormControl, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-add-employee',
@@ -14,10 +16,22 @@ export class AddEmployeeComponent implements OnInit {
   btnSubmitText: string;
   btnTextCancelOrClear: string;
 
+  employeeForm = new FormGroup({
+    firstName: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    lastName: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    Address: new FormControl('', [Validators.required, Validators.minLength(10)]),
+    doj: new FormControl('')
+  });
+
+  get f() {
+    return this.employeeForm.controls;
+  }
+
   constructor(private employeeService: EmployeeService,
               public dialog: MatDialog,
               private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.selectedEmployee = this.route.snapshot.params.id; // To read the selected employee id from URL
@@ -64,11 +78,21 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   addEmployee() {
-    console.log(`Adding Employee... ${this.employeeData}`);
-    this.employeeService.addEmployee(this.employeeData)
+    console.log(`Adding Employee... `);
+    console.log(this.employeeForm.value);
+    this.employeeService.addEmployee(this.employeeForm.value)
       .subscribe(
         res => {
-          return console.log(res);
+          const snackBarRef = this.snackBar.open(`Employee ${res.firstName} is added sucessfully`, 'Ok', {
+            duration: 3000
+          });
+          snackBarRef.afterDismissed().subscribe(() => {
+            console.log('The snack-bar was dismissed');
+          });
+          snackBarRef.onAction().subscribe(() => {
+            console.log('The snack-bar action was triggered!');
+          });
+          // snackBarRef.dismiss();
         },
         err => {
           return console.log(err);
@@ -81,16 +105,25 @@ export class AddEmployeeComponent implements OnInit {
     this.employeeService.updateEmployee(this.employeeData)
       .subscribe(
         res => {
-          return console.log(res);
+          const snackBarRef = this.snackBar.open(`Employee ${res.firstName} is updated sucessfully`, 'Ok', {
+            duration: 3000
+          });
+          snackBarRef.afterDismissed().subscribe(() => {
+            console.log('The snack-bar was dismissed');
+          });
+          snackBarRef.onAction().subscribe(() => {
+            console.log('The snack-bar action was triggered!');
+          });
+          // snackBarRef.dismiss();
         },
         err => {
-          return console.log(err);
+          console.log(err);
         });
   }
 
   cancelorClear(operation: string) {
     if (operation === 'Clear') {
-      this.employeeData = [];
+      this.employeeData = []; // To clear all input fields
     } else if (operation === 'Cancel') {
       this.router.navigate(['employeelist']); // To navigate to employee list page
     }

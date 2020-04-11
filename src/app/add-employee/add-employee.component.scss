@@ -1,15 +1,13 @@
-.card {
-    max-width: 100%;
-  }
-  
- .example-header-image {
-    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-    background-size: cover;
- }
-
-input {
+label { 
+  display: block; 
+  width: 150px; 
+  float: left; 
+  margin-left: 20px; 
+}
+ 
+input, textarea {
   height: 20px;
-  width: 550px;
+  width: 500px;
   border: 1px solid #000;
  }
 
@@ -17,10 +15,78 @@ input {
   padding: 10px 0 10px 10px;
  }
 
- .container .mat-form-field + .mat-form-field {
-  margin-left: 8px;
+mat-hint {
+  margin-left: 10px;
 }
 
-mat-form-field{
-  width: 400px;
+#actions {
+ display: inline-flex;
+ float:right;
 }
+
+.alert {
+	position: relative;
+	padding: .75rem 1.25rem;
+	margin-bottom: 1rem;
+	border: 1px solid transparent;
+  border-radius: .25rem;
+}
+
+.alert-danger {
+	color: #721c24;
+	background-color: #f8d7da;
+	border-color: #f5c6cb
+}
+
+.alert-danger hr {
+	border-top-color: #f1b0b7
+}
+
+.alert-danger .alert-link {
+	color: #491217
+}
+
+textarea {
+	overflow: auto;
+	resize: vertical
+}
+
+@media (min-width:576px) {
+	.container {
+    max-width: 540px;
+    border: none;
+	}
+}
+
+@media (min-width:768px) {
+	.container {
+		max-width: 720px
+	}
+}
+
+@media (min-width:992px) {
+	.container {
+		max-width: 960px
+	}
+}
+
+@media (min-width:1200px) {
+	.container {
+		max-width: 1140px
+	}
+}
+
+.container-fluid {
+	width: 100%;
+	padding-right: 15px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: auto
+}
+
+@media (prefers-reduced-motion:reduce) {
+	.custom-switch .custom-control-label::after {
+		transition: none
+	}
+}
+
